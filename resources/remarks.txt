@@ -1,0 +1,5 @@
+1.
+To build - go build -o application.exe usersapi.go
+
+2.
+To run on Windows - application.exe
