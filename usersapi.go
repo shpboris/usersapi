@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
@@ -12,13 +13,24 @@ import (
 	"usersapi/usrsvc"
 )
 
+const (
+	contentTypeHeader = "Content-Type"
+	acceptHeader      = "Accept"
+	applicationJson   = "application/json"
+	POST              = "POST"
+	GET               = "GET"
+	PUT               = "PUT"
+	DELETE            = "DELETE"
+)
+
 func main() {
 	router := mux.NewRouter()
-	router.HandleFunc("/users", SaveUser).Methods("POST").Headers("Content-Type", "application/json")
-	router.HandleFunc("/users", FindUsers).Methods("GET").Headers("Accept", "application/json")
-	router.HandleFunc("/users/{id}", FindUser).Methods("GET").Headers("Accept", "application/json")
-	router.HandleFunc("/users/{id}", UpdateUser).Methods("PUT").Headers("Content-Type", "application/json")
-	router.HandleFunc("/users/{id}", DeleteUser).Methods("DELETE")
+	router.HandleFunc("/users", SaveUser).Methods(POST).Headers(contentTypeHeader, applicationJson)
+	router.HandleFunc("/users", FindUsers).Methods(GET).Headers(acceptHeader, applicationJson)
+	router.HandleFunc("/users/{id}", FindUser).Methods(GET).Headers(acceptHeader, applicationJson)
+	router.HandleFunc("/users/{id}", UpdateUser).Methods(PUT).Headers(contentTypeHeader, applicationJson)
+	router.HandleFunc("/users/{id}", DeleteUser).Methods(DELETE)
+	fmt.Println("Starting the server on port 8000")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
 
