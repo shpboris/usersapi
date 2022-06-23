@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/shpboris/usersdata"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"reflect"
 	"strings"
-	"usersapi/usrdata"
-	"usersapi/usrsvc"
+	"usersapi/userssvc"
 )
 
 const (
@@ -36,19 +36,19 @@ func main() {
 
 func SaveUser(w http.ResponseWriter, r *http.Request) {
 	reqBody, _ := ioutil.ReadAll(r.Body)
-	var user usrdata.User
+	var user usersdata.User
 	json.Unmarshal(reqBody, &user)
 	if len(strings.TrimSpace(user.Id)) == 0 {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	usrsvc.Save(user)
+	userssvc.Save(user)
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(user)
 }
 
 func FindUsers(w http.ResponseWriter, r *http.Request) {
-	users := usrsvc.FindAll()
+	users := userssvc.FindAll()
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(users)
 }
@@ -56,8 +56,8 @@ func FindUsers(w http.ResponseWriter, r *http.Request) {
 func FindUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	user := usrsvc.FindOne(id)
-	if reflect.DeepEqual(user, usrdata.User{}) {
+	user := userssvc.FindOne(id)
+	if reflect.DeepEqual(user, usersdata.User{}) {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
@@ -68,8 +68,8 @@ func FindUser(w http.ResponseWriter, r *http.Request) {
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	user := usrsvc.FindOne(id)
-	if reflect.DeepEqual(user, usrdata.User{}) {
+	user := userssvc.FindOne(id)
+	if reflect.DeepEqual(user, usersdata.User{}) {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
@@ -79,7 +79,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	usrsvc.Save(user)
+	userssvc.Save(user)
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(user)
 }
@@ -87,11 +87,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	user := usrsvc.FindOne(id)
-	if reflect.DeepEqual(user, usrdata.User{}) {
+	user := userssvc.FindOne(id)
+	if reflect.DeepEqual(user, usersdata.User{}) {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 	w.WriteHeader(http.StatusNoContent)
-	usrsvc.Delete(id)
+	userssvc.Delete(id)
 }

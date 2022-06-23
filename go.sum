@@ -1,2 +1,12 @@
 github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
+github.com/shpboris/usersdata v0.0.0-20220623074859-c1f315ac60a0 h1:twqF83LlriFUkO1V67SI7YH1rZYTZZV581KuW22FtGI=
+github.com/shpboris/usersdata v0.0.0-20220623074859-c1f315ac60a0/go.mod h1:CSIbHyrmSKaXp7Ps6DgQj6r/BrRYb9y3/gg/G8Fqfhw=
+github.com/shpboris/usersdata v0.0.0-20220623094820-123507cf64c4 h1:F8ooxEyxYybY8mYmDPW2+r8pOnq9mN1esrBep4JpEF8=
+github.com/shpboris/usersdata v0.0.0-20220623094820-123507cf64c4/go.mod h1:CSIbHyrmSKaXp7Ps6DgQj6r/BrRYb9y3/gg/G8Fqfhw=
+github.com/shpboris/usersdata v0.0.0-20220623100948-cc08df64ec44 h1:c5SlMBcwZp/SzVzIVC+f6Tg33TfsirPBc8XdtXBpbnA=
+github.com/shpboris/usersdata v0.0.0-20220623100948-cc08df64ec44/go.mod h1:CSIbHyrmSKaXp7Ps6DgQj6r/BrRYb9y3/gg/G8Fqfhw=
+github.com/shpboris/usersdata v1.0.0 h1:6EnwPYdGzZPyR2QChC4AqHrw8HlcUyPlWTwHAGnHzVA=
+github.com/shpboris/usersdata v1.0.0/go.mod h1:CSIbHyrmSKaXp7Ps6DgQj6r/BrRYb9y3/gg/G8Fqfhw=
+github.com/shpboris/usersdata v1.0.1 h1:YRAiTnJFQUBN6nmiPJGipDYVS+RW/ff+WmdsmcTaIWQ=
+github.com/shpboris/usersdata v1.0.1/go.mod h1:CSIbHyrmSKaXp7Ps6DgQj6r/BrRYb9y3/gg/G8Fqfhw=
