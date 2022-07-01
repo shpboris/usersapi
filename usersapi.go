@@ -2,11 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/shpboris/logger"
 	"github.com/shpboris/usersdata"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"reflect"
 	"strings"
@@ -30,11 +29,12 @@ func main() {
 	router.HandleFunc("/users/{id}", FindUser).Methods(GET).Headers(acceptHeader, applicationJson)
 	router.HandleFunc("/users/{id}", UpdateUser).Methods(PUT).Headers(contentTypeHeader, applicationJson)
 	router.HandleFunc("/users/{id}", DeleteUser).Methods(DELETE)
-	fmt.Println("Starting the server on port 8000")
-	log.Fatal(http.ListenAndServe(":8000", router))
+	logger.Log.Info("Started the server on port 8000")
+	logger.Log.Fatal(http.ListenAndServe(":8000", router))
 }
 
 func SaveUser(w http.ResponseWriter, r *http.Request) {
+	logger.Log.Debug("Started SaveUser")
 	reqBody, _ := ioutil.ReadAll(r.Body)
 	var user usersdata.User
 	json.Unmarshal(reqBody, &user)
@@ -45,15 +45,19 @@ func SaveUser(w http.ResponseWriter, r *http.Request) {
 	userssvc.Save(user)
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(user)
+	logger.Log.Debug("Completed SaveUser")
 }
 
 func FindUsers(w http.ResponseWriter, r *http.Request) {
+	logger.Log.Debug("Started FindUsers")
 	users := userssvc.FindAll()
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(users)
+	logger.Log.Debug("Completed FindUsers")
 }
 
 func FindUser(w http.ResponseWriter, r *http.Request) {
+	logger.Log.Debug("Started FindUser")
 	vars := mux.Vars(r)
 	id := vars["id"]
 	user := userssvc.FindOne(id)
@@ -63,9 +67,11 @@ func FindUser(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(user)
+	logger.Log.Debug("Completed FindUser")
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
+	logger.Log.Debug("Started UpdateUser")
 	vars := mux.Vars(r)
 	id := vars["id"]
 	user := userssvc.FindOne(id)
@@ -82,9 +88,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	userssvc.Save(user)
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(user)
+	logger.Log.Debug("Completed UpdateUser")
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	logger.Log.Debug("Started DeleteUser")
 	vars := mux.Vars(r)
 	id := vars["id"]
 	user := userssvc.FindOne(id)
@@ -94,4 +102,5 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusNoContent)
 	userssvc.Delete(id)
+	logger.Log.Debug("Completed DeleteUser")
 }

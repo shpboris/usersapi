@@ -4,6 +4,13 @@ To build - go build -o application.exe usersapi.go
 2.
 To run on Windows - application.exe
 
+Or alternatively, create and run a run.bat file with the following content.
+[Create logs directory on the same level as application.exe file before running the run.bat file]
+
+set LOG_FILE_PATH=logs\usersapi.log
+application.exe
+pause
+
 3.
 To bring a dependency and update go.mod file with it, execute the following from the directory of go.mod file -
 go get github.com/shpboris/usersdata@v1.0.1
