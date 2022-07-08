@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: usersapi
-          image: shpboris/usersapi
+          image: shpboris/usersapi:in-mem
           ports:
             - containerPort: 8000
               protocol: TCP
