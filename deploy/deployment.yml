@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usersapi-dpl
+  namespace: my-test-ns
+  labels:
+    app: usersapi-lbl
+spec:
+  selector:
+    matchLabels:
+      app: usersapi-lbl
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: usersapi-lbl
+    spec:
+      containers:
+        - name: usersapi
+          image: shpboris/usersapi
+          ports:
+            - containerPort: 8000
+              protocol: TCP

@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  namespace: my-test-ns
+  name: usersapi-vs
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - my-test-gateway.istio-system.svc.cluster.local
+  http:
+    - match:
+        - uri:
+            prefix: "/users"
+      route:
+        - destination:
+            port:
+              number: 8000
+            host: usersapi-svc
