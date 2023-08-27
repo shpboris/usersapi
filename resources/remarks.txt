@@ -25,3 +25,40 @@ Like - github.com/shpboris/usersdata
 Then to use the function or var or struct from a file under directory above, the package specified in this file should
 be used following by function/struct/var name like here - usersdata.User.
 Package name can be different from directory name in which it (package) resides and from file name to which it (package) belongs.
+
+6.
+Remote debug
+
+6.1
+Copy special Dockerfile that produces debug image C:\my-branches\usersapi\deploy\deploy-for-remote-debug\Dockerfile to
+C:\my-branches\usersapi\Dockerfile (i.e same level as go.mod)
+
+6.2
+Build image
+C:\my-branches\usersapi>nerdctl --namespace k8s.io build -t shpboris/usersapi:debug .
+
+6.3
+Create namespace, deploy deployment.yml and service.yaml from C:\my-branches\usersapi\deploy\deploy-for-remote-debug.
+
+kubectl create namespace my-test-ns
+kubectl apply -f deployment.yml
+kubectl apply -f service.yml
+
+6.4
+Create port forwarding to debugging port of the image (40000) and to the actual API port (8000).
+
+6.5
+Create Goland remote config that connects to localhost and port 40000.
+Run the config so it will connect to the debugger in the pod.
+
+6.6
+Put a breakpoint in FindUsers method and execute this API
+curl --location 'http://localhost:8000/users' \
+--header 'Accept: application/json'
+
+6.7
+The process is explained here -
+
+https://alexsniffin.medium.com/debugging-remotely-in-kubernetes-with-go-fda4f3332316
+https://www.jetbrains.com/help/go/attach-to-running-go-processes-with-debugger.html#step-2-build-the-application
+
