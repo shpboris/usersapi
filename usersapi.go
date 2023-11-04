@@ -29,6 +29,10 @@ func main() {
 	router.HandleFunc("/users/{id}", FindUser).Methods(GET).Headers(acceptHeader, applicationJson)
 	router.HandleFunc("/users/{id}", UpdateUser).Methods(PUT).Headers(contentTypeHeader, applicationJson)
 	router.HandleFunc("/users/{id}", DeleteUser).Methods(DELETE)
+	logger.Log.Info("In 2nd revision !!!!!")
+	user := usersdata.User{Id: "2", Name: "user2", Unit: "unit2", Salary: 22}
+	userssvc.Save(user)
+	logger.Log.Info("Created initial user")
 	logger.Log.Info("Started the server on port 8000")
 	logger.Log.Fatal(http.ListenAndServe(":8000", router))
 }
