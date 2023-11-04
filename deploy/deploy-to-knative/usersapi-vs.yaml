@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  labels:
+  name: usersapi-vs
+  namespace: my-test-ns
+spec:
+  gateways:
+    - knative-serving/knative-ingress-gateway
+  hosts:
+    - '*'
+  http:
+    - match:
+        - ignoreUriCase: true
+          uri:
+            prefix: /api/users
+      rewrite:
+        authority: usersapi.my-test-ns.svc.cluster.local
+        uri: /users
+      route:
+        - destination:
+            host: knative-local-gateway.istio-system.svc.cluster.local
+            port:
+              number: 80

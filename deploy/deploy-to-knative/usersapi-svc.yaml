@@ -1,0 +1,14 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: usersapi
+  namespace: my-test-ns
+spec:
+  template:
+    spec:
+      containers:
+        - name: usersapi
+          image: shpboris/usersapi
+          ports:
+            - containerPort: 8000
+              protocol: TCP
